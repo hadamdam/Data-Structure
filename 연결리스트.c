@@ -9,7 +9,7 @@ struct NODE
 	int data;
 };
 
-void addFirst(struct NODE* target, int data)
+void addFirst(struct NODE* target, int data)	//target이 가리키는 노드 바로 뒤에 data를 갖는 새로운 노드를 연결시켜주는 함수
 {
 	struct NODE* newNode = malloc(sizeof(struct NODE));
 	newNode->next = target->next;
@@ -17,20 +17,20 @@ void addFirst(struct NODE* target, int data)
 	target->next = newNode;
 }
 
-void removeFirst(struct NODE* target)    // 기준 노드의 다음 노드를 삭제하는 함수
+void removeFirst(struct NODE* target)    //target이 가리키는 노드 바로 다음 노드를 제거해주는 함수
 {
-	struct NODE* removeNode = target->next;    // 기준 노드의 다음 노드 주소를 저장
-	target->next = removeNode->next;     // 기준 노드의 다음 노드에 삭제할 노드의 다음 노드를 지정
+	struct NODE* removeNode = target->next;    
+	target->next = removeNode->next;     
 
-	free(removeNode);    // 노드 메모리 해제
+	free(removeNode);    
 }
 
-void insertNode(struct NODE* head)
+void insertNode(struct NODE* head)	//노드추가함수 
 {
-	int node_place;
-	int node_data;
+	int node_place;		//추가하는 노드의 위치
+	int node_data;		//추가하는 노드의 data 값
 
-	puts("<추가>: 추가할 노드의 위치와 data 값을 입력하세요");
+	puts("<추가>: 추가할 노드의 위치와 data 값을 입력하세요");	//사용자에게 입력 받음
 	fputs("노드 위치: ", stdout);
 	scanf("%d", &node_place);
 	fputs("노드 값: ", stdout);
@@ -39,18 +39,18 @@ void insertNode(struct NODE* head)
 	struct NODE* target = head;
 
 	int i;
-	for (i = 0; i < (node_place - 1); i++)
+	for (i = 0; i < (node_place - 1); i++)	//target을 head로 초기화한뒤 (node_place-1)번 이동시켜 새 노드의 바로 앞의 노드를(새 노드를 가리킬 노드) 가리키도록 한다.
 	{
 		target = target->next;
-	}
+	}	//ex) node_place가 3이면 target은 두번째 노드를 가리킨다.
 
-	addFirst(target, node_data);
-	fputs("\n", stdout);
+	addFirst(target, node_data);	//사용자에게 입력받은 node_data를 인자로 전달한다.
+	fputs("\n", stdout);	//구분을 위해 엔터 출력
 }
 
-void deleteNode(struct NODE* head)
+void deleteNode(struct NODE* head)	//노드 삭제 함수
 {
-	int node_place;
+	int node_place;		//사용자가 입력하는 삭제할 노드 위치
 
 	puts("<삭제>: 삭제할 노드의 위치를 입력하세요");
 	fputs("노드 위치: ", stdout);
@@ -59,7 +59,7 @@ void deleteNode(struct NODE* head)
 	struct NODE* target = head;
 
 	int i;
-	for (i = 0; i < (node_place - 1); i++)
+	for (i = 0; i < (node_place - 1); i++)	//target이 삭제할 노드의 바로 앞의 노드를(삭제할 노드를 가리키는 노드) 가리키도록 한다.
 	{
 		target = target->next;
 	}
@@ -68,10 +68,10 @@ void deleteNode(struct NODE* head)
 	fputs("\n", stdout);
 }
 
-void updateNode(struct NODE* head)
+void updateNode(struct NODE* head)	//이미 존재하는 노드의 data 값을 변경해주는 함수
 {
-	int node_place;
-	int new_data;
+	int node_place;	//변경하고자 하는 노드의 위치
+	int new_data;	//새로운 data 값
 
 	puts("<변경>: 노드의 위치와 새로운 data 값을 입력하세요");
 	fputs("노드 위치: ", stdout);
@@ -82,16 +82,16 @@ void updateNode(struct NODE* head)
 	struct NODE* target = head;
 
 	int i;
-	for (i = 0; i < node_place; i++)
+	for (i = 0; i < node_place; i++)	//target은 변경할 노드를 가리킨다.(node_place)번 이동함. (node_place-1) 아님에 주의!
 	{
 		target = target->next;
 	}
 
-	target->data = new_data;
+	target->data = new_data;	//data변수에 새 data 값 대입
 	fputs("\n", stdout);
 }
 
-void printArr(struct NODE* head)
+void printArr(struct NODE* head)	//현재 연결리스트 상태를 출력
 {
 	struct NODE* curr = head->next;
 	int i=1;
@@ -117,7 +117,7 @@ int main(void)
 	addFirst(head, 30);
 	addFirst(head, 20);
 	addFirst(head, 10);
-	
+	//[head] -> [1: 10] -> [2: 20] -> [3: 30] -> NULL로 초기화
 
 	int choose=0;
 
@@ -145,7 +145,7 @@ int main(void)
 	}
 	
 	struct NODE *curr = head->next;      
-	while (curr != NULL)    
+	while (curr != NULL)    //메모리 해제
 	{
 		struct NODE* next = curr->next; 
 		free(curr);        
